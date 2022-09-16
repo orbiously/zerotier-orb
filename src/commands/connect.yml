@@ -1,0 +1,34 @@
+description: |
+  This command installs ZeroTier CLI (if needed), checks that all required environement variables are set. Then it connects the build-host (ZeroTier member) to the specified ZeroTier network.
+
+parameters:
+  zerotier-net-id:
+    type: env_var_name
+    default: ZT_NET_ID
+    description: |
+      Name of the nevironment variable containing the ZeroTier network ID.
+  zerotier-api-token:
+    type: env_var_name
+    default: ZT_API_TOKEN
+    description: |
+      Name of the nevironment variable containing the ZeroTier API token.    
+steps:
+  - run:
+      environment:
+        PARAM_ZT_NET_ID: << parameters.zerotier-net-id >>
+        PARAM_ZT_API_TOKEN: << parameters.zerotier-api-token >>
+        SCRIPT_SETUP_LINUX: << include(scripts/linux/setup.sh) >>
+        SCRIPT_SETUP_WINDOWS: << include(scripts/windows/setup.sh) >>
+        SCRIPT_SETUP_MACOS: << include(scripts/macos/setup.sh) >>
+      name: Setting up ZeroTier CLI
+      command: <<include(scripts/setup.sh)>>
+
+  - run:
+      environment:
+        PARAM_ZT_NET_ID: << parameters.zerotier-net-id >>
+        PARAM_ZT_API_TOKEN: << parameters.zerotier-api-token >>
+        SCRIPT_CONNECT_LINUX: << include(scripts/linux/connect.sh) >>
+        SCRIPT_CONNECT_WINDOWS: << include(scripts/windows/connect.sh) >>
+        SCRIPT_CONNECT_MACOS: << include(scripts/macos/connect.sh) >>
+      name: Connecting to ZeroTier Network
+      command: <<include(scripts/connect.sh)>>
