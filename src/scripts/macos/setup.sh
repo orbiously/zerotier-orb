@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ( zerotier-cli -v ) > /dev/null 2>&1; then
-  echo "ZeroTier CLI v.$(zerotier-cli -v) for macOS is already installed"
+  printf "\nZeroTier CLI v.%s for macOS is already installed" "$(zerotier-cli -v)"
 else
   echo "Installing ZeroTier CLI for macOS"
   curl "https://download.zerotier.com/dist/ZeroTier%20One.pkg" -o zerotier-one.pkg
