@@ -35,16 +35,17 @@ jobs:
     executor:
       name: win/default
     steps:
+      - run: choco install zerotier-one -y
       - zerotier/connect
       # - zerotier/disconnect
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
-      # - command-tests-linux:
-      #     filters: *filters
-      # - command-tests-docker:
-      #     filters: *filters
+      - command-tests-linux:
+          filters: *filters
+      - command-tests-docker:
+          filters: *filters
       # - command-tests-macos:
       #     filters: *filters
       - command-tests-windows:
@@ -58,7 +59,7 @@ workflows:
           requires:
             - orb-tools/pack
             # - command-tests-linux
-            # - command-tests-docker
+            - command-tests-docker
             # - command-tests-macos
             - command-tests-windows
 
