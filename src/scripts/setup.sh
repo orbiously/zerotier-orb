@@ -43,7 +43,7 @@ if [ -z "${!PARAM_ZT_API_TOKEN}" ]; then
   exit 1
 fi
 
-echo "Environment variables check: OK"
+printf "\nEnvironment variables check: OK"
 
 
 if [ "$EXECUTOR" = "linux" ]; then eval "$SCRIPT_SETUP_LINUX";
