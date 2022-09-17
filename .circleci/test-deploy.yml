@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   zerotier: orbiously/zerotier@dev:<<pipeline.git.revision>>
   orb-tools: circleci/orb-tools@11.1
+  win: circleci/windows@5.0.0
 
 filters: &filters
   tags:
@@ -10,18 +11,43 @@ filters: &filters
 jobs:
   # Create a job to test the commands of your orbs.
   # You may want to add additional validation steps to ensure the commands are working as expected.
-  command-tests:
+  command-tests-docker:
     docker:
-      - image: cimg/base:current
+      - image: cimg/base:2022.08
+    resource_class: small
     steps:
-      - checkout
-      # Run your orb's commands to validate them.
-      - zerotier/greet
+      - zerotier/connect
+      # - zerotier/disconnect
+  command-tests-linux:
+    machine:
+      image: ubuntu-2004:202201-02
+    resource_class: medium
+    steps:
+      - zerotier/connect
+      # - zerotier/disconnect
+  command-tests-macos:
+    macos:
+      xcode: "14.0.0"
+    steps:
+      - zerotier/connect
+      # - zerotier/disconnect
+  command-tests-windows:
+    executor:
+      name: win/default
+    steps:
+      - zerotier/connect
+      # - zerotier/disconnect
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
-      - command-tests:
+      - command-tests-linux:
+          filters: *filters
+      - command-tests-docker:
+          filters: *filters
+      - command-tests-macos:
+          filters: *filters
+      - command-tests-windows:
           filters: *filters
       - orb-tools/pack:
           filters: *filters
@@ -31,7 +57,11 @@ workflows:
           pub-type: production
           requires:
             - orb-tools/pack
-            - command-tests
+            - command-tests-linux
+            - command-tests-docker
+            - command-test-macos
+            - command-tests-windows
+
           context: orb-publishing
           filters:
             branches:
