@@ -1,5 +1,6 @@
 description: |
-  This command installs ZeroTier CLI (if needed), checks that all required environement variables are set. Then it connects the build-host (ZeroTier member) to the specified ZeroTier network.
+  This command installs ZeroTier CLI (if needed), checks that all required environement variables are set.
+  Then it connects the build-host (ZeroTier member) to the specified ZeroTier network.
 
 parameters:
   net-id-var:
@@ -11,7 +12,7 @@ parameters:
     type: env_var_name
     default: ZT_API_TOKEN
     description: |
-      Name of the nevironment variable containing the ZeroTier API token.    
+      Name of the nevironment variable containing the ZeroTier API token.
 steps:
   - run:
       environment:
