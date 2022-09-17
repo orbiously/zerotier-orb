@@ -23,6 +23,7 @@ steps:
         SCRIPT_SETUP_MACOS: << include(scripts/macos/setup.sh) >>
       name: Setting up ZeroTier CLI
       command: <<include(scripts/setup.sh)>>
+      shell: bash
 
   # - run:
   #     environment:
