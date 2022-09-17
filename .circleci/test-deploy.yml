@@ -59,7 +59,7 @@ workflows:
             - orb-tools/pack
             - command-tests-linux
             - command-tests-docker
-            - command-test-macos
+            - command-tests-macos
             - command-tests-windows
 
           context: orb-publishing
