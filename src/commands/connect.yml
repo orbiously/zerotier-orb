@@ -23,12 +23,12 @@ steps:
       name: Setting up ZeroTier CLI
       command: <<include(scripts/setup.sh)>>
 
-  - run:
-      environment:
-        PARAM_ZT_NET_ID: << parameters.net-id-var >>
-        PARAM_ZT_API_TOKEN: << parameters.api-token-var >>
-        SCRIPT_CONNECT_LINUX: << include(scripts/linux/connect.sh) >>
-        SCRIPT_CONNECT_WINDOWS: << include(scripts/windows/connect.sh) >>
-        SCRIPT_CONNECT_MACOS: << include(scripts/macos/connect.sh) >>
-      name: Connecting to ZeroTier Network
-      command: <<include(scripts/connect.sh)>>
+  # - run:
+  #     environment:
+  #       PARAM_ZT_NET_ID: << parameters.net-id-var >>
+  #       PARAM_ZT_API_TOKEN: << parameters.api-token-var >>
+  #       SCRIPT_CONNECT_LINUX: << include(scripts/linux/connect.sh) >>
+  #       SCRIPT_CONNECT_WINDOWS: << include(scripts/windows/connect.sh) >>
+  #       SCRIPT_CONNECT_MACOS: << include(scripts/macos/connect.sh) >>
+  #     name: Connecting to ZeroTier Network
+  #     command: <<include(scripts/connect.sh)>>
