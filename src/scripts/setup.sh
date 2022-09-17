@@ -22,7 +22,7 @@ echo "Checking if required environment variables are set"
 echo "=================================================="
 
 if [ -z "${!PARAM_ZT_NET_ID}" ]; then 
-  printf "The environment variable that should contain your ZeroTier network ID is not set or accessible.\n\n"
+  printf "\nThe environment variable that should contain your ZeroTier network ID is not set or accessible.\n\n"
   if [ "${PARAM_ZT_NET_ID}" != "ZT_NET_ID" ]; then
     echo "> Make sure to store the ZeroTier network ID in the environment variable you specified via the \`net-id-var\` parameter: \"${PARAM_ZT_NET_ID}\"."
   else
