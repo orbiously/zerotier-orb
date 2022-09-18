@@ -16,27 +16,31 @@ jobs:
       - image: cimg/base:2022.08
     resource_class: small
     steps:
-      - zerotier/connect
+      - zerotier/connect:
+          zerotier-remote-member: "10.244.72.250"
       # - zerotier/disconnect
   command-tests-linux:
     machine:
       image: ubuntu-2004:202201-02
     resource_class: medium
     steps:
-      - zerotier/connect
+      - zerotier/connect:
+          zerotier-remote-member: "10.244.72.250"
       # - zerotier/disconnect
   command-tests-macos:
     macos:
       xcode: "14.0.0"
     steps:
-      - zerotier/connect
+      - zerotier/connect:
+          zerotier-remote-member: "10.244.72.250"
       # - zerotier/disconnect
   command-tests-windows:
     executor:
       name: win/default
     steps:
       - run: choco install zerotier-one -y
-      - zerotier/connect
+      - zerotier/connect:
+          zerotier-remote-member: "10.244.72.250"
       # - zerotier/disconnect
 workflows:
   test-deploy:
