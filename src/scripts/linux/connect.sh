@@ -1,15 +1,5 @@
 #!/bin/bash
 
-if (! sudo systemctl status zerotier-one |grep -iq "running"); then
-  echo "Starting ZeroTier service..."
-  sudo systemctl start zerotier-one
-  until sudo systemctl status zerotier-one |grep -iq "running"; do
-    sleep 1;
-  done
-fi
-
-echo "ZeroTier service started."
-
 MEMBER_ID=$(sudo zerotier-cli info|cut -d " " -f3)
 
 printf "\nAuthorizing member..."

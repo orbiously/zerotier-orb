@@ -1,14 +1,5 @@
 #!/bin/bash
 
-if (! sudo launchctl list | grep -q "com.zerotier.one"); then
-    sudo launchctl load /Library/LaunchDaemons/com.zerotier.one.plist
-    until sudo launchctl list | grep -q "com.zerotier.one"; do
-     sleep 1;
-    done
-fi
-
-echo "ZeroTier service started."
-
 MEMBER_ID=$(sudo zerotier-cli info|cut -d " " -f3)
 
 printf "\nAuthorizing member..."
