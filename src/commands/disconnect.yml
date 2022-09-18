@@ -7,7 +7,7 @@ parameters:
     default: false
     description: |
       Whether or not to store the ZeroTier log file.
-      If set to `true`, a `zerotier.log` file will be available under the "Artifacts" tab.  
+      If set to `true`, a `zerotier.log` file will be available under the "Artifacts" tab.
 
 steps:
   - run:
