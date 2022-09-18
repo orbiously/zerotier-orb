@@ -18,7 +18,7 @@ jobs:
     steps:
       - zerotier/connect:
           zerotier-remote-member: "10.244.72.250"
-      # - zerotier/disconnect
+      - zerotier/disconnect
   command-tests-linux:
     machine:
       image: ubuntu-2004:202201-02
@@ -26,14 +26,14 @@ jobs:
     steps:
       - zerotier/connect:
           zerotier-remote-member: "10.244.72.250"
-      # - zerotier/disconnect
+      - zerotier/disconnect
   command-tests-macos:
     macos:
       xcode: "14.0.0"
     steps:
       - zerotier/connect:
           zerotier-remote-member: "10.244.72.250"
-      # - zerotier/disconnect
+      - zerotier/disconnect
   command-tests-windows:
     executor:
       name: win/default
@@ -41,15 +41,16 @@ jobs:
       - run: choco install zerotier-one -y
       - zerotier/connect:
           zerotier-remote-member: "10.244.72.250"
-      # - zerotier/disconnect
+      - zerotier/disconnect:
+          store-log: true
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests-linux:
           filters: *filters
-      - command-tests-docker:
-          filters: *filters
+      # - command-tests-docker:
+      #     filters: *filters
       - command-tests-macos:
           filters: *filters
       - command-tests-windows:
