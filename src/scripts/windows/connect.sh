@@ -7,7 +7,8 @@ if [ "$(curl --location --request POST "https://api.zerotier.com/api/v1/network/
     --header "Authorization: bearer ${!PARAM_ZT_NET_ID}" \
     --header 'Content-Type: text/plain' \
     --data-raw '{"config": {"authorized": true}}' -o /dev/null -s -w "%{http_code}" )" != "200" ]; then
-  echo "Either the ZeroTier network ID or the ZeroTier API token is incorrect. Please check the respective values"
+  printf "\nCould not authorize member."
+  printf "\nEither the ZeroTier network ID or the ZeroTier API token is incorrect. Please check the respective values."
   exit 1
 else
   printf "\nThis ZeroTier member is now authorized."
