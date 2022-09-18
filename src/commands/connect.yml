@@ -1,5 +1,5 @@
 description: |
-  This command installs ZeroTier CLI (if needed), checks that all required environement variables are set.
+  This command installs ZeroTier (if needed), checks that all required environement variables are set.
   Then it connects the build-host (ZeroTier member) to the specified ZeroTier network.
 
 parameters:
@@ -13,6 +13,11 @@ parameters:
     default: ZT_API_TOKEN
     description: |
       Name of the nevironment variable containing the ZeroTier API token.
+  zerotier-remote-member:
+    type: string
+    description: |
+      ZeroTier IP address of the ZeroTier remote member to establish a link with.
+
 steps:
   - run:
       environment:
@@ -21,16 +26,18 @@ steps:
         SCRIPT_SETUP_LINUX: << include(scripts/linux/setup.sh) >>
         SCRIPT_SETUP_WINDOWS: << include(scripts/windows/setup.sh) >>
         SCRIPT_SETUP_MACOS: << include(scripts/macos/setup.sh) >>
-      name: Setting up ZeroTier CLI
+      name: Setting up ZeroTier
       command: <<include(scripts/setup.sh)>>
       shell: bash
 
-  # - run:
-  #     environment:
-  #       PARAM_ZT_NET_ID: << parameters.net-id-var >>
-  #       PARAM_ZT_API_TOKEN: << parameters.api-token-var >>
-  #       SCRIPT_CONNECT_LINUX: << include(scripts/linux/connect.sh) >>
-  #       SCRIPT_CONNECT_WINDOWS: << include(scripts/windows/connect.sh) >>
-  #       SCRIPT_CONNECT_MACOS: << include(scripts/macos/connect.sh) >>
-  #     name: Connecting to ZeroTier Network
-  #     command: <<include(scripts/connect.sh)>>
+  - run:
+      environment:
+        PARAM_ZT_NET_ID: << parameters.net-id-var >>
+        PARAM_ZT_API_TOKEN: << parameters.api-token-var >>
+        PARAM_ZT_REMOTE_MBR: << parameters.zerotier-remote-member >>
+        SCRIPT_CONNECT_LINUX: << include(scripts/linux/connect.sh) >>
+        SCRIPT_CONNECT_WINDOWS: << include(scripts/windows/connect.sh) >>
+        SCRIPT_CONNECT_MACOS: << include(scripts/macos/connect.sh) >>
+      name: Connecting to ZeroTier Network
+      command: <<include(scripts/connect.sh)>>
+      shell: bash

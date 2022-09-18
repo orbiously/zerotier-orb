@@ -50,3 +50,5 @@ if [ "$EXECUTOR" = "linux" ]; then eval "$SCRIPT_SETUP_LINUX";
 elif [ "$EXECUTOR" = "macos" ]; then eval "$SCRIPT_SETUP_MACOS";
 elif [ "$EXECUTOR" = "windows" ]; then eval "$SCRIPT_SETUP_WINDOWS";
 fi
+
+echo 'export "EXECUTOR=$EXECUTOR"' >> $BASH_ENV
