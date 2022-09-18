@@ -2,10 +2,15 @@
 
 MEMBER_ID=$(/c/progra~2/ZeroTier/One/zerotier-cli.bat info|cut -d " " -f3)
 
-curl --location --request POST "https://my.zerotier.com/api/v1/network/$ZT_NET_ID/member/$MEMBER_ID" \
-    --header "Authorization: bearer $ZT_API_TOKEN" \
+if (! curl --location --request POST "https://api.zerotier.com/api/v1/network/${!PARAM_ZT_NET_ID}/member/$MEMBER_ID" \
+    --header "Authorization: bearer ${!PARAM_ZT_NET_ID}" \
     --header 'Content-Type: text/plain' \
-    --data-raw '{"config": {"authorized": true}}'
+    --data-raw '{"config": {"authorized": true}}'); then
+  echo "Either the ZeroTier network ID or the ZeroTier API token is incorrect. Please check the respective values"
+  exit 1
+else
+  echo "This ZeroTier member is now authorized."
+fi
 
 /c/progra~2/ZeroTier/One/zerotier-cli.bat set "$ZT_NET_ID" allowGlobal=true
 

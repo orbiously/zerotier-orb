@@ -12,12 +12,15 @@ echo "ZeroTier service started."
 MEMBER_ID=$(sudo zerotier-cli info|cut -d " " -f3)
 
 echo "Authorizing member..."
-curl --location --request POST "https://api.zerotier.com/api/v1/network/${!PARAM_ZT_NET_ID}/member/$MEMBER_ID" \
+if (! curl --location --request POST "https://api.zerotier.com/api/v1/network/${!PARAM_ZT_NET_ID}/member/$MEMBER_ID" \
     --header "Authorization: bearer ${!PARAM_ZT_NET_ID}" \
     --header 'Content-Type: text/plain' \
-    --data-raw '{"config": {"authorized": true}}'
-
-echo "This ZeroTier member is now authorized."
+    --data-raw '{"config": {"authorized": true}}'); then
+  echo "Either the ZeroTier network ID or the ZeroTier API token is incorrect. Please check the respective values"
+  exit 1
+else
+  echo "This ZeroTier member is now authorized."
+fi
     
 sudo zerotier-cli set "${!PARAM_ZT_NET_ID}" allowGlobal=true
 
