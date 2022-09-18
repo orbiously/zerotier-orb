@@ -10,4 +10,4 @@ if [ "$PARAM_STORE_LOG" = 1 ]; then
 fi
 
 echo "Stopping ZeroTier service"
-sudo systemctl stop zerotier-one
+net stop "ZeroTierOneService"
