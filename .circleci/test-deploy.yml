@@ -50,10 +50,10 @@ workflows:
           filters: *filters
       # - command-tests-docker:
       #     filters: *filters
-      - command-tests-macos:
-          filters: *filters
-      - command-tests-windows:
-          filters: *filters
+      # - command-tests-macos:
+      #     filters: *filters
+      # - command-tests-windows:
+      #     filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
@@ -64,8 +64,8 @@ workflows:
             - orb-tools/pack
             - command-tests-linux
             # - command-tests-docker
-            - command-tests-macos
-            - command-tests-windows
+            # - command-tests-macos
+            # - command-tests-windows
 
           context: orb-publishing
           filters:
