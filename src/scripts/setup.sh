@@ -52,4 +52,4 @@ elif [ "$EXECUTOR" = "windows" ]; then eval "$SCRIPT_SETUP_WINDOWS";
 fi
 
 echo "export EXECUTOR=$EXECUTOR" >> "$BASH_ENV"
-echo "export NETWORK_ID=$${!PARAM_ZT_NET_ID}" >> "$BASH_ENV"
+echo "export NETWORK_ID=${!PARAM_ZT_NET_ID}" >> "$BASH_ENV"
