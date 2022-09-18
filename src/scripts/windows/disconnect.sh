@@ -5,8 +5,7 @@ echo "Leaving ZeroTier network"
 
 if [ "$PARAM_STORE_LOG" = 1 ]; then
   printf "\nGenerating ZeroTier log\n\n"
-  /c/progra~2/ZeroTier/One/zerotier-cli.bat dump
-  cp /c/Users/circleci/Desktop/zerotier_dump.txt /c/tmp
+  cd /c/tmp && /c/progra~2/ZeroTier/One/zerotier-cli.bat dump
 fi
 
 echo "Stopping ZeroTier service"
