@@ -4,11 +4,11 @@ if [ "$PARAM_FULL_VPN" = 1 ]; then
   DEFAULT_GW=$(ipconfig|grep "Default" | awk -F ': ' '{print$2}'| grep -v -e '^[[:blank:]]*$')
   echo "Initial default gateway is $DEFAULT_GW"
 
-  route add 169.254.0.0 MASK 255.255.0.0 $DEFAULT_GW
+  route add 169.254.0.0 MASK 255.255.0.0 "$DEFAULT_GW"
 
   ET_phone_home=$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($3, a, ":"); print a[1] }')
   if [ -n "$ET_phone_home" ]; then
-    route add "$ET_phone_home" MASK 255.255.255.255 $DEFAULT_GW
+    route add "$ET_phone_home" MASK 255.255.255.255 "$DEFAULT_GW"
   fi
 
   /c/progra~2/ZeroTier/One/zerotier-cli.bat set "$ZT_NET_ID" allowDefault=true
