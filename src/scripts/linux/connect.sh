@@ -11,7 +11,7 @@ if [ "$(curl --location --request POST "https://api.zerotier.com/api/v1/network/
   printf "\nEither the ZeroTier network ID or the ZeroTier API token is incorrect. Please check the respective values."
   exit 1
 else
-  printf "\nThis ZeroTier member is now authorized."
+  printf "\nThis ZeroTier member is now authorized.\n\n"
 fi
 
 sudo zerotier-cli set "${!PARAM_ZT_NET_ID}" allowGlobal=true
