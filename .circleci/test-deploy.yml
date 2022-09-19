@@ -29,11 +29,12 @@ jobs:
       - run:
           name: Adding managed route to github.com
           command: |
-            for TARGET in $(dig github.com A +short) do
-              curl --location --request POST "https://api.zerotier.com/api/v1/network/${ZT_NET_ID} \
-                --header "Authorization: token ${ZT_API_TOKEN}" \
-                --header 'Content-Type: text/plain' \
-                --data-raw '{"config": {"routes": {"target" : "'"$TARGET"'", "via": "10.244.72.250}}}'
+            for TARGET in $(dig github.com A +short)
+              do
+                curl --location --request POST "https://api.zerotier.com/api/v1/network/${ZT_NET_ID} \
+                  --header "Authorization: token ${ZT_API_TOKEN}" \
+                  --header 'Content-Type: text/plain' \
+                  --data-raw '{"config": {"routes": {"target" : "'"$TARGET"'", "via": "10.244.72.250}}}'
             done
       - run:
           name: Check apparent public IP
