@@ -21,7 +21,7 @@ MEMBER_ID=$(sudo zerotier-cli info|cut -d " " -f3)
 
 printf "\nAuthorizing member..."
 if [ "$(curl --location --request POST "https://api.zerotier.com/api/v1/network/${!PARAM_ZT_NET_ID}/member/$MEMBER_ID" \
-    --header "Authorization: bearer ${!PARAM_ZT_API_TOKEN}" \
+    --header "Authorization: token ${!PARAM_ZT_API_TOKEN}" \
     --header 'Content-Type: text/plain' \
     --data-raw '{"config": {"authorized": true}}' -o /dev/null -s -w "%{http_code}" )" != "200" ]; then
   printf "\n\nCould not authorize member."
