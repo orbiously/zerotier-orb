@@ -1,5 +1,22 @@
 #!/bin/bash
 
+if [ "$PARAM_FULL_VPN" = 1 ]; then
+  DEFAULT_GW="$(route -n get default|grep gateway| awk '{print $2}')"
+  echo "Initial default gateway is $DEFAULT_GW"
+  
+  sudo route -n add -net 169.254.0.0/16 $DEFAULT_GW
+  
+  ET_phone_home="$(netstat -an | grep '\.2222\s.*ESTABLISHED' | head -n1 | awk '{ split($5, a, "."); print a[1] "." a[2] "." a[3] "." a[4] }')"  
+  if [ -n "$ET_phone_home" ]; then
+    sudo route -n add -net "$ET_phone_home/32" $DEFAULT_GW
+  fi
+
+  sudo zerotier-cli set "${!PARAM_ZT_NET_ID}" allowDefault=true
+
+else
+  sudo zerotier-cli set "${!PARAM_ZT_NET_ID}" allowGlobal=true
+fi
+
 MEMBER_ID=$(sudo zerotier-cli info|cut -d " " -f3)
 
 printf "\nAuthorizing member..."
@@ -13,8 +30,6 @@ if [ "$(curl --location --request POST "https://api.zerotier.com/api/v1/network/
 else
   printf "\nThis ZeroTier member is now authorized.\n\n"
 fi
-    
-sudo zerotier-cli set "${!PARAM_ZT_NET_ID}" allowGlobal=true
 
 printf "\nJoining ZeroTier network..."
 sudo zerotier-cli join "${!PARAM_ZT_NET_ID}"
