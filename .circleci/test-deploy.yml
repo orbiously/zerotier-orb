@@ -26,6 +26,9 @@ jobs:
     steps:
       - zerotier/connect:
           zerotier-remote-member: "10.244.72.250"
+      - run: |
+          curl -s checkip.amazonaws.com
+          curl -s ifconfig.co
       - zerotier/disconnect
   command-tests-macos:
     macos:
@@ -33,7 +36,11 @@ jobs:
     steps:
       - zerotier/connect:
           zerotier-remote-member: "10.244.72.250"
-      - zerotier/disconnect
+      - run: |
+          curl -s checkip.amazonaws.com
+          curl -s ifconfig.co
+      - zerotier/disconnect:
+          store-log: true
   command-tests-windows:
     executor:
       name: win/default
@@ -41,8 +48,11 @@ jobs:
       - run: choco install zerotier-one -y
       - zerotier/connect:
           zerotier-remote-member: "10.244.72.250"
-      - zerotier/disconnect:
-          store-log: true
+          full-vpn: true
+      - run: |
+          curl -s checkip.amazonaws.com
+          curl -s ifconfig.co
+      - zerotier/disconnect
 workflows:
   test-deploy:
     jobs:
