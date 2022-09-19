@@ -49,9 +49,11 @@ jobs:
       - zerotier/connect:
           zerotier-remote-member: "10.244.72.250"
           full-vpn: true
-      - run: |
-          curl -s checkip.amazonaws.com
-          curl -s ifconfig.co
+      - run:
+          shell: bash
+          command: |
+            curl -s checkip.amazonaws.com
+            curl -s ifconfig.co
       - zerotier/disconnect
 workflows:
   test-deploy:
