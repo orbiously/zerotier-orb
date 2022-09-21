@@ -1,0 +1,38 @@
+description: >
+  Use your Zerotier network ID and ZeroTier API token stored in custom-named environment variables.
+  Store the ZeroTier log as artifact upon disconnection.
+
+usage:
+  version: 2.1
+  orbs:
+    zerotier: orbiously/zerotier@1.0.0
+    win: circleci/windows@5.0.0
+  
+  jobs:
+    for-the-win:
+      executor:
+        name: win/default
+      steps:
+        - zerotier/connect:
+            net-id-var: MY_ZEROTIER_NETWORK
+            api-token-var: TOKEN_SAFE_PLACE
+            zerotier-remote-member: "10.244.72.250"
+        - run:
+            shell: bash
+            name: Check apparent public IP
+            command: |
+              curl -s ifconfig.co
+              # If you've added a managed route to the "ifconfig.co" hostname's IPs via the ZeroTier member with private IP "10.244.72.250"
+              # then the above command will return the public IP of that ZeroTier member.
+              # (https://zerotier.atlassian.net/wiki/spaces/SD/pages/224395274/Route+between+ZeroTier+and+Physical+Networks)
+        - run:
+            shell: bash
+            name: List other peers in this Zerotier network
+            command: |
+              /c/progra~2/ZeroTier/One/zerotier-cli.bat listpeers
+        - zerotier/disconnect:
+            store-log: true
+  workflows:
+    winning:
+      jobs:
+        - for-the-win
