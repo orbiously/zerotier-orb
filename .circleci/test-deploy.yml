@@ -45,7 +45,7 @@ jobs:
             curl -s checkip.amazonaws.com
             curl -s ifconfig.co
       - zerotier/disconnect:
-          store-log: true
+          store-settings-dump: true
   command-tests-windows:
     executor:
       name: win/default
