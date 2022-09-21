@@ -11,6 +11,7 @@ usage:
     macchiato:
       macos:
         xcode: "14.0.0"
+
       steps:
         - zerotier/connect:
             zerotier-remote-member: "10.147.19.3"
