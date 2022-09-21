@@ -7,7 +7,7 @@ usage:
   orbs:
     zerotier: orbiously/zerotier@1.0.0
     win: circleci/windows@5.0.0
-  
+
   jobs:
     for-the-win:
       executor:
