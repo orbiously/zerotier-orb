@@ -26,4 +26,4 @@ steps:
       steps:
         - store_artifacts:
             path: /tmp/zerotier_dump.txt
-            destination: zerotier.log
+            destination: zerotier.dump
