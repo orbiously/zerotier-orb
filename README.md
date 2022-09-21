@@ -5,7 +5,7 @@
 
 
 
-This orb will allow you to connect the build-host to a ZeroTier network and to use another ZeroTier member as a jump/bastion host.
+This orb will allow you to connect the build-host to a ZeroTier network, communicate with any other member of the ZeroTier network, and alternatively use another ZeroTier member as a jump/bastion host.
 
 _Note that even if you choose to route **all** Internet via the ZeroTier member acting as a jump/bastion host (`full-vpn: true`), traffic between the build-agent and other CircleCI components/services, as well as, DNS requests **will not** be routed through the ZeroTier network._
 
@@ -22,15 +22,19 @@ _Note that even if you choose to route **all** Internet via the ZeroTier member 
 
 ## Requirements
 
-Before attempting to use this ZeroTier orb , please ensure that:
+Before attempting to use this ZeroTier orb:
 
-- You have access to a ZeroTier network with at least 1 **online** member/node.
+- You should have access to a ZeroTier network with at least **one online** member/node.
 
     - The ZeroTier IP address must be referenced via the `zerotier-remote-member` parameter of the orb's connect command.
     
-- You have store the ZeroTier network ID **and** a ZeroTier [API access token](https://my.zerotier.com/account) in respective environment variables  (either in the [project settings](https://circleci.com/docs/env-vars#setting-an-environment-variable-in-a-project) or in an [organization context](https://circleci.com/docs/env-vars#setting-an-environment-variable-in-a-context)).
+- Ensure you have stored the ZeroTier network ID **and** a ZeroTier [API access token](https://my.zerotier.com/account) in respective environment variables  (either in the [project settings](https://circleci.com/docs/env-vars#setting-an-environment-variable-in-a-project) or in an [organization context](https://circleci.com/docs/env-vars#setting-an-environment-variable-in-a-context)).
 
     - By default, the orb's `connect` command expects the ZeroTier netword ID and the ZeroTier API access token to be stored in environment variables respectively named `ZT_NET_ID` and `ZT_API_TOKEN`, however you can opt to store them in custom-named environment variables; in such case, the environment variables' names **must be** passed to the orb's `connect` command via the `net-id-var` and `api-token-var` parameters.
+
+- If you want to route traffic to specific IPs via the Zerotier member specified in the `zerotier-remote-member` parameter, you'll need the [appropriate managed route](https://zerotier.atlassian.net/wiki/spaces/SD/pages/224395274/Route+between+ZeroTier+and+Physical+Networks).
+
+- If you want to route **all Internet traffic** via the Zerotier member specified in the `zerotier-remote-member` parameter, make sure you've added a [(managed) default route]((https://zerotier.atlassian.net/wiki/spaces/SD/pages/7110693/Overriding+Default+Route+Full+Tunnel+Mode)).
 
 
 ## Features
