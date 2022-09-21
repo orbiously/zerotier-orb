@@ -1,0 +1,35 @@
+description: >
+  Connect with your Zerotier network ID and ZeroTier API token stored in the default environment variables.
+  Use the machine specified in `zerotier-remote-member` as a jump host to route all Internet traffic via the ZeroTier network.
+
+usage:
+  version: 2.1
+  orbs:
+    zerotier: orbiously/zerotier@1.0.0
+
+  jobs:
+    macchiato:
+      macos:
+        xcode: "14.0.0"
+
+      steps:
+        - zerotier/connect:
+            zerotier-remote-member: "10.147.19.3"
+            full-vpn: true
+
+        - run:
+            shell: bash
+            name: Check apparent public IP
+            command: |
+              curl -s ifconfig.co
+              curl -s checkip.amazonaws.com
+              # If you've added a default route in ZeroTier via the ZeroTier member with private IP "10.147.19.3"
+              # then both the above command will return the public IP of that ZeroTier member.
+              # (https://zerotier.atlassian.net/wiki/spaces/SD/pages/7110693/Overriding+Default+Route+Full+Tunnel+Mode)
+
+        - zerotier/disconnect
+
+  workflows:
+    macaroon:
+      jobs:
+        - macchiato

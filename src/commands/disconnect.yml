@@ -1,0 +1,29 @@
+description: |
+  This command disconnects the build-host from the ZeroTier network, stores the ZeroTier log (if option enabled), and finally stops the ZeroTier service.
+
+parameters:
+  store-settings-dump:
+    type: boolean
+    default: false
+    description: |
+      Whether or not to store the ZeroTier log file.
+      If set to `true`, a `zerotier.log` file will be available under the "Artifacts" tab.
+
+steps:
+  - run:
+      environment:
+        PARAM_STORE_DUMP: << parameters.store-settings-dump >>
+        SCRIPT_LEAVE_LINUX: << include(scripts/linux/disconnect.sh) >>
+        SCRIPT_LEAVE_WINDOWS: << include(scripts/windows/disconnect.sh) >>
+        SCRIPT_LEAVE_MACOS: << include(scripts/macos/disconnect.sh) >>
+      name: Disconnecting from ZeroTier network.
+      command: <<include(scripts/disconnect.sh)>>
+      shell: bash
+      when: always
+
+  - when:
+      condition: << parameters.store-settings-dump >>
+      steps:
+        - store_artifacts:
+            path: /tmp/zerotier_dump.txt
+            destination: zerotier.dump
