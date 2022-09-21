@@ -34,7 +34,7 @@ Before attempting to use this ZeroTier orb:
 
 - If you want to route traffic to specific IPs via the Zerotier member specified in the `zerotier-remote-member` parameter, you'll need the [appropriate managed route](https://zerotier.atlassian.net/wiki/spaces/SD/pages/224395274/Route+between+ZeroTier+and+Physical+Networks).
 
-- If you want to route **all Internet traffic** via the Zerotier member specified in the `zerotier-remote-member` parameter, make sure you've added a [(managed) default route]((https://zerotier.atlassian.net/wiki/spaces/SD/pages/7110693/Overriding+Default+Route+Full+Tunnel+Mode)).
+- If you want to route **all Internet traffic** via the Zerotier member specified in the `zerotier-remote-member` parameter, make sure you've added a [(managed) default route](https://zerotier.atlassian.net/wiki/spaces/SD/pages/7110693/Overriding+Default+Route+Full+Tunnel+Mode).
 
 
 ## Features
